@@ -82,12 +82,36 @@ public class Sudoku
     
     public void vaciarElemento (int fila, int columna)
     {
-        sudo.get(fila-1).remove(columna-1);
+        sudo.get(fila-1).set(columna-1, 0);
     }
     
-    private boolean comprobarFila(int columna, int elemento)
+    private boolean comprobarFila(int fila, int elemento)
     {
         boolean resultado = true;
+        for (int i = 0; i < sudo.size(); i++) 
+        {
+            if (sudo.get(fila).get(i) == elemento)
+            {
+                resultado = false;
+            }
+        }
+        return resultado;
+    }
+    
+    private boolean comprobarColumna(int columna, int elemento)
+    {
+        boolean resultado = true;
+        for (int i = 0; i < sudo.size(); i++) 
+        {
+            for (int j = 0; j < 10; j++) 
+            {
+                if (sudo.get(i).get(columna) == elemento)
+                {
+                       resultado = false;
+                }
+            }
+                
+        }
         
         return resultado;
     }
@@ -95,6 +119,59 @@ public class Sudoku
     private boolean comprobarCuadrante(int fila, int columna, int elemento)
     {
         boolean resultado = true;
+        int fila1 = 0;
+        int fila2 = 0;
+        int columna1 = 0;
+        int columna2 = 0;
+        
+        if (fila >= 0 && fila <= 2)
+        {
+            fila1 = 0;
+            fila2 = 2;
+        }
+        if (fila >= 3 && fila <= 5)
+        {
+            fila1 = 3;
+            fila2 = 5;
+        }
+        if (fila >= 6 && fila <= 8)
+        {
+            fila1 = 6;
+            fila2 = 8;
+        }
+        
+        
+        if (columna >= 0 && columna <= 2)
+        {
+            columna1 = 0;
+            columna2 = 2;
+        }
+        if (columna >= 3 && columna <= 5)
+        {
+            columna1 = 0;
+            columna2 = 2;
+        }
+        if (columna >= 6 && columna <= 8)
+        {
+            columna1 = 0;
+            columna2 = 2;
+        }
+        
+        for (int i = fila1; i < fila2; i++)
+        {
+            for (int j = columna1; j < columna2; j++) 
+            {
+                if (sudo.get(i).get(j) == elemento)
+                {
+                    if (columna >= 0 && columna <= 2)
+                    {
+                        resultado = false;
+                    }
+        
+                }
+            }
+        }
+        
         
         return resultado;
     }
@@ -103,6 +180,10 @@ public class Sudoku
     {
         boolean resultado = false;
         
+        if (comprobarFila(fila, elemento) == true && comprobarColumna(columna, elemento) == true && comprobarCuadrante(fila, columna, elemento))
+        {
+            resultado = true;
+        }
         return resultado;
     }
 }

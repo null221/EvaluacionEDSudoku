@@ -11,8 +11,8 @@ package ejercicioevaluaciontema4;
  */
 class SudokuException extends Exception 
 {
-    public SudokuException()
+    public SudokuException(String mensaje)
     {
-        super();
+        super(mensaje);
     }
 }
